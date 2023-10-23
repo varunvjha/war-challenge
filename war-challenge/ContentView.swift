@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var playerCard = "card" + String(Int.random(in: 2...14))
+    @State private var cpuCard = "card" + String(Int.random(in: 2...14))
+    @State private var playerScore = 0
+    @State private var cpuScore = 0
+    
     var body: some View {
         ZStack {
             Image("background").ignoresSafeArea()
@@ -17,13 +23,27 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Image("card3")
+                    Image(playerCard)
                     Spacer()
-                    Image("card4")
+                    Image(cpuCard)
                     Spacer()
                 }
                 Spacer()
-                Image("dealbutton")
+                Button(action: {
+                    let playerRand = Int.random(in: 2...14)
+                    let cpuRand = Int.random(in: 2...14)
+                    
+                    playerCard = "card" + String(playerRand)
+                    cpuCard = "card" + String(cpuRand)
+                    
+                    if (playerRand > cpuRand) {
+                        playerScore+=1
+                    } else if (cpuRand > playerRand) {
+                        cpuScore+=1
+                    }
+                }, label: {
+                    Image("dealbutton")
+                })
                 Spacer()
                 HStack {
                     Spacer()
@@ -31,13 +51,13 @@ struct ContentView: View {
                         Text("Player").font(.headline)
                             .foregroundColor(Color.white)
                             .padding(.bottom, 10)
-                        Text("0").font(.largeTitle).foregroundColor(Color.white)
+                        Text(String(playerScore)).font(.largeTitle).foregroundColor(Color.white)
                     }
                     Spacer()
                     VStack {
                         Text("CPU").font(.headline).foregroundColor(Color.white).padding(.bottom, 10)
                         
-                        Text("0").font(.largeTitle).foregroundColor(Color.white)
+                        Text(String(cpuScore)).font(.largeTitle).foregroundColor(Color.white)
                     }
                     Spacer()
                 }
